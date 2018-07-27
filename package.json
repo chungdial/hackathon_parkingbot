@@ -1,0 +1,22 @@
+{
+  "name": "parkingchatbot-line",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://ruby1133299@bitbucket.org/3drens/parkingchatbot-line.git"
+  },
+  "author": "3drens",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/3drens/parkingchatbot-line#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "linebot": "^1.4.1",
+    "node-fetch": "^2.1.2"
+  }
+}
