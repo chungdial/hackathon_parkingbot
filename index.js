@@ -6,9 +6,9 @@ const API_ROOT = 'https://parkingbotserver.herokuapp.com';
 let changeNumplateUser = [];
 
 const bot = linebot({
-  channelId: '1580794985',
-  channelSecret: 'f39b9a4c0fa9717935751b9e3a5e6734',
-  channelAccessToken: 'j3KMY9JWyWDM51AujBompVj/H0pg/tZ4MCtptfdVj+iKxu4AgdzYu63MqyQw5I6f7oQkAaMrafX3oxIborJxshGOhZszw1wvOmJh/wuS+FtlRCFDXurIePB/Yxhlz/OtDdhbo98y873Xnq0TgJ7wiAdB04t89/1O/w1cDnyilFU='
+  channelId: '<ID>',
+  channelSecret: '<SECRET>',
+  channelAccessToken: '<TOKEN>'
 });
 
 function reply(event, msg) {
