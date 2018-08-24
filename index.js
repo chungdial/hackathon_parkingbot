@@ -220,7 +220,7 @@ bot.on('message', function(event) {
             parseInt(results[i].dis * 6371000) < 100 ? zoom = 17 : 16;
             today.getHours() < parseInt(roadSegTm[0].split(':')[0]) || today.getHours() > parseInt(roadSegTm[1].split(':')[0]) ? roadSegTm = '免費' : roadSegTm = results[i].obj.roadSegFee + '/時';
             cards[i] = {
-              "thumbnailImageUrl": "https://maps.googleapis.com/maps/api/staticmap?center=" + event.message.latitude + "," + event.message.longitude + "&zoom=" + zoom + "&size=400x600&maptype=roadmap&markers=color:red%7C" + event.message.latitude + "," + event.message.longitude + "&markers=icon:https://chart.apis.google.com/chart?chst=d_map_pin_icon%26chld=parking%257C000000%7C" + results[i].obj.roadSegLocation[1] + "," + results[i].obj.roadSegLocation[0] + "&key=AIzaSyCmLAVu2NcqvV0YuxwcI-oRsRYoev8EWUE",
+              "thumbnailImageUrl": "https://image.maps.api.here.com/mia/1.6/mapview?c=" + event.message.latitude + "%2C" + event.message.longitude + "&poix0=" + event.message.latitude + "%2C" + event.message.longitude + "%3Bred%3Bwhite%3B20%3B0&poix1=" + results[i].obj.roadSegLocation[1] + "%2C" + results[i].obj.roadSegLocation[0] + "%3Bwhite%3Bblue%3B20%3BP&z="+zoom+"&app_id=zLl5ZxcDNN3cZOSgcnbt&app_code=MT8pXNZ_bK1hDMXmtMUDcQ",
               "imageBackgroundColor": "#000000",
               "title": i + 1 + '. 距離' + parseInt(results[i].dis * 6371000) + 'm\n' + roadSegTm,
               "text": results[i].obj.roadSegName + '(路邊停車格)\n總車位: ' + results[i].obj.roadSegTotal + ' 剩餘車位: ' + results[i].obj.roadSegAvail + '\n\u23F0最後更新:' + time,
