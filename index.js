@@ -227,12 +227,12 @@ bot.on('message', function(event) {
               "defaultAction": {
                 "type": "uri",
                 "label": "View detail",
-                "uri": "https://www.google.com.tw/maps?q=" + results[i].obj.roadSegLocation[1] + "," + results[i].obj.roadSegLocation[0] + "&zoom=16&daddr=" + results[i].obj.roadSegLocation[1] + "," + results[i].obj.roadSegLocation[0] + '&dirflg=d',
+                "uri": "https://www.here.com/directions/drive/end:" + results[i].obj.roadSegLocation[1] + "," + results[i].obj.roadSegLocation[0],
               },
               "actions": [{
                   "type": "uri",
                   "label": "導航到停車位",
-                  "uri": "https://www.google.com.tw/maps?q=" + results[i].obj.roadSegLocation[1] + "," + results[i].obj.roadSegLocation[0] + "&zoom=16&daddr=" + results[i].obj.roadSegLocation[1] + "," + results[i].obj.roadSegLocation[0] + '&dirflg=d',
+                  "uri": "https://www.here.com/directions/drive/end:" + results[i].obj.roadSegLocation[1] + "," + results[i].obj.roadSegLocation[0],
                 },
                 {
                   "type": "uri",
