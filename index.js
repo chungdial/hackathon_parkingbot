@@ -160,7 +160,7 @@ bot.on('message', function(event) {
                 "type": "text",
                 "text": "已成功更改車牌為： " + event.message.text
               };
-              changeNumplateUser=changeNumplateUser.filter((i)=>{ return i != event.source.userId; });
+              changeNumplateUser = changeNumplateUser.filter((i) => { return i != event.source.userId; });
               reply(event, msg);
             }
           })
@@ -212,18 +212,26 @@ bot.on('message', function(event) {
           let today = new Date(new Date().getTime() + 8 * 3600000);
           for (var i = 0; i < results.length; i++) {
             let UpdateTm = new Date(results[i].obj.roadSegUpdateTm);
-            let roadSegTm = results[i].obj.roadSegTmStartEnd.split('-');
             let time = (today.getTime() - UpdateTm.getTime()) / 3600000;
+            let roadSegType=results[i].obj.roadSegType=='indoor'?'室內停車場':'路邊停車格';
+            let roadSegTm;
             let zoom = 15;
             time = time < 1 ? parseInt(time * 60) + '分鐘前' : parseInt(time) + '小時前';
             parseInt(results[i].dis * 6371000) < 300 ? zoom = 16 : 14;
             parseInt(results[i].dis * 6371000) < 100 ? zoom = 17 : 16;
-            today.getHours() < parseInt(roadSegTm[0].split(':')[0]) || today.getHours() > parseInt(roadSegTm[1].split(':')[0]) ? roadSegTm = '免費' : roadSegTm = results[i].obj.roadSegFee + '/時';
+            if (results[i].obj.roadSegTmStartEnd.indexOf('-')!=-1) {
+              roadSegTm = results[i].obj.roadSegTmStartEnd.split('-'):[];
+              roadSegTm = today.getHours() < parseInt(roadSegTm[0].split(':')[0]) || today.getHours() > parseInt(roadSegTm[1].split(':')[0]) ? '免費' : results[i].obj.roadSegFee;
+            }else{
+              roadSegTm = results[i].obj.roadSegFee;
+            }
+            let title=i + 1 + '. 距離' + parseInt(results[i].dis * 6371000) + 'm ' + roadSegTm;
+            title=title.length>36?title.substring(0,30)+'...':title;
             cards[i] = {
               "thumbnailImageUrl": "https://image.maps.api.here.com/mia/1.6/mapview?c=" + event.message.latitude + "%2C" + event.message.longitude + "&poix0=" + event.message.latitude + "%2C" + event.message.longitude + "%3Bred%3Bwhite%3B20%3B0&poix1=" + results[i].obj.roadSegLocation[1] + "%2C" + results[i].obj.roadSegLocation[0] + "%3Bwhite%3Bblue%3B20%3BP&z="+zoom+"&app_id=zLl5ZxcDNN3cZOSgcnbt&app_code=MT8pXNZ_bK1hDMXmtMUDcQ",
               "imageBackgroundColor": "#000000",
-              "title": i + 1 + '. 距離' + parseInt(results[i].dis * 6371000) + 'm\n' + roadSegTm,
-              "text": results[i].obj.roadSegName + '(路邊停車格)\n總車位: ' + results[i].obj.roadSegTotal + ' 剩餘車位: ' + results[i].obj.roadSegAvail + '\n\u23F0最後更新:' + time,
+              "title": title,
+              "text": results[i].obj.roadSegName + '('+roadSegType+')\n總車位: ' + results[i].obj.roadSegTotal + ' 剩餘車位: ' + results[i].obj.roadSegAvail + '\n\u23F0最後更新:' + time,
               "defaultAction": {
                 "type": "uri",
                 "label": "View detail",
@@ -248,15 +256,18 @@ bot.on('message', function(event) {
               ]
             };
           }
-          cards.splice(5);
-          msg = {
-            "type": "template",
-            "altText": "附近停車位置",
-            "template": {
-              "type": "carousel",
-              "columns": cards,
-              "imageAspectRatio": "rectangle",
-              "imageSize": "cover"
+          if (cards) {
+            console.log(cards);
+            cards.splice(5);
+            msg = {
+              "type": "template",
+              "altText": "附近停車位置",
+              "template": {
+                "type": "carousel",
+                "columns": cards,
+                "imageAspectRatio": "rectangle",
+                "imageSize": "cover"
+              }
             }
           }
         }
